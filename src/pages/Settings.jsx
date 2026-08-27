@@ -19,6 +19,30 @@ import { useNavigate } from "react-router-dom";
 import BottomDock from "../components/BottomDock";
 import MobileShell from "../components/MobileShell";
 
+const Toggle = ({ enabled, onClick }) => {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`relative h-[24px] w-[42px] rounded-full transition ${
+        enabled ? "bg-[#B89B72]" : "bg-[#DDD5CA]"
+      }`}
+    >
+      <motion.span
+        animate={{
+          x: enabled ? 18 : 2,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 500,
+          damping: 32,
+        }}
+        className="absolute left-0 top-[2px] h-5 w-5 rounded-full bg-[#FFFCF7] shadow-sm"
+      />
+    </button>
+  );
+};
+
 const Settings = () => {
   const navigate = useNavigate();
 
@@ -26,30 +50,6 @@ const Settings = () => {
   const [mentions, setMentions] = useState(true);
   const [assignments, setAssignments] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
-
-  const Toggle = ({ enabled, onClick }) => {
-    return (
-      <button
-        type="button"
-        onClick={onClick}
-        className={`relative h-[24px] w-[42px] rounded-full transition ${
-          enabled ? "bg-[#B89B72]" : "bg-[#DDD5CA]"
-        }`}
-      >
-        <motion.span
-          animate={{
-            x: enabled ? 18 : 2,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 500,
-            damping: 32,
-          }}
-          className="absolute left-0 top-[2px] h-5 w-5 rounded-full bg-[#FFFCF7] shadow-sm"
-        />
-      </button>
-    );
-  };
 
   return (
     <MobileShell className="pb-28">

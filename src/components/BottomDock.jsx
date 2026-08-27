@@ -31,6 +31,70 @@ const navItems = [
   },
 ];
 
+const NavButton = ({ item, isActive, onClick }) => {
+  const Icon = item.icon;
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="
+        relative
+        flex
+        h-[48px]
+        min-w-0
+        flex-1
+        items-center
+        justify-center
+      "
+    >
+      {isActive && (
+        <motion.div
+          layoutId="quantum-dock-active"
+          transition={{
+            type: "spring",
+            stiffness: 460,
+            damping: 36,
+          }}
+          className="
+            absolute
+            h-[42px]
+            w-[48px]
+            rounded-[15px]
+            bg-[#FFFCF7]
+          "
+        />
+      )}
+
+      <div
+        className="
+          relative
+          z-10
+          flex
+          flex-col
+          items-center
+          justify-center
+          gap-[2px]
+        "
+      >
+        <Icon
+          size={16}
+          strokeWidth={1.8}
+          className={isActive ? "text-[#171512]" : "text-[#FFFCF7]/40"}
+        />
+
+        <span
+          className={`text-[7px] font-medium ${
+            isActive ? "text-[#171512]" : "text-[#FFFCF7]/35"
+          }`}
+        >
+          {item.label}
+        </span>
+      </div>
+    </button>
+  );
+};
+
 const BottomDock = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -64,71 +128,6 @@ const BottomDock = () => {
   };
 
   const active = getActive();
-
-  const NavButton = ({ item }) => {
-    const Icon = item.icon;
-    const isActive = active === item.id;
-
-    return (
-      <button
-        type="button"
-        onClick={() => navigate(item.path)}
-        className="
-          relative
-          flex
-          h-[48px]
-          min-w-0
-          flex-1
-          items-center
-          justify-center
-        "
-      >
-        {isActive && (
-          <motion.div
-            layoutId="quantum-dock-active"
-            transition={{
-              type: "spring",
-              stiffness: 460,
-              damping: 36,
-            }}
-            className="
-              absolute
-              h-[42px]
-              w-[48px]
-              rounded-[15px]
-              bg-[#FFFCF7]
-            "
-          />
-        )}
-
-        <div
-          className="
-            relative
-            z-10
-            flex
-            flex-col
-            items-center
-            justify-center
-            gap-[2px]
-          "
-        >
-          <Icon
-            size={16}
-            strokeWidth={1.8}
-            className={isActive ? "text-[#171512]" : "text-[#FFFCF7]/40"}
-          />
-
-          <span
-            className={`text-[7px] font-medium ${
-              isActive ? "text-[#171512]" : "text-[#FFFCF7]/35"
-            }`}
-          >
-            {item.label}
-          </span>
-        </div>
-      </button>
-    );
-  };
 
   return (
     <div
@@ -169,9 +168,17 @@ const BottomDock = () => {
           shadow-[0_16px_40px_rgba(30,25,19,0.24)]
         "
       >
-        <NavButton item={navItems[0]} />
+        <NavButton
+          item={navItems[0]}
+          isActive={active === navItems[0].id}
+          onClick={() => navigate(navItems[0].path)}
+        />
 
-        <NavButton item={navItems[1]} />
+        <NavButton
+          item={navItems[1]}
+          isActive={active === navItems[1].id}
+          onClick={() => navigate(navItems[1].path)}
+        />
 
         {/* CREATE */}
 
@@ -202,9 +209,17 @@ const BottomDock = () => {
           </motion.button>
         </div>
 
-        <NavButton item={navItems[2]} />
+        <NavButton
+          item={navItems[2]}
+          isActive={active === navItems[2].id}
+          onClick={() => navigate(navItems[2].path)}
+        />
 
-        <NavButton item={navItems[3]} />
+        <NavButton
+          item={navItems[3]}
+          isActive={active === navItems[3].id}
+          onClick={() => navigate(navItems[3].path)}
+        />
       </nav>
     </div>
   );
